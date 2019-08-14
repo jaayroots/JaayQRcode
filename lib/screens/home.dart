@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jaay_qr_code/screens/register.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -30,7 +31,13 @@ class _HomeState extends State<Home> {
           'Sing Up',
           style: TextStyle(color: myColors),
         ),
-        onPressed: () {},
+        onPressed: () {
+          print('You Click SingUp');
+          // Create Route Can Back
+          MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext context) => Register());
+          Navigator.of(context).push(materialPageRoute);
+
+        },
       ),
     );
   }
@@ -92,7 +99,10 @@ class _HomeState extends State<Home> {
       body: Container(
         decoration: BoxDecoration(
             gradient: RadialGradient(
-                colors: [Colors.white, Colors.grey], radius: 1.0,center: Alignment.center,)),
+          colors: [Colors.white, Colors.grey],
+          radius: 1.0,
+          center: Alignment.center,
+        )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
