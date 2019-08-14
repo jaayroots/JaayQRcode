@@ -9,13 +9,27 @@ class _HomeState extends State<Home> {
 // Explicit
 
   double mySize = 250.0;
+  Color myColors = Colors.red[300];
 
 // Method
+
+  Widget mySizeBox() {
+    return SizedBox(
+      width: 6.0,
+      height: 12.0,
+    );
+  }
 
   Widget singUpButtom() {
     return Expanded(
       child: OutlineButton(
-        child: Text('Sing Up'),
+        borderSide: BorderSide(color: myColors),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        child: Text(
+          'Sing Up',
+          style: TextStyle(color: myColors),
+        ),
         onPressed: () {},
       ),
     );
@@ -42,6 +56,7 @@ class _HomeState extends State<Home> {
       width: 250.0,
       child: Row(children: <Widget>[
         singInButtom(),
+        mySizeBox(),
         singUpButtom(),
       ]),
     );
@@ -74,9 +89,19 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[showLogo(), showAppName(), showButtom()],
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: RadialGradient(
+                colors: [Colors.white, Colors.grey], radius: 1.0,center: Alignment.center,)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            showLogo(),
+            mySizeBox(),
+            showAppName(),
+            showButtom()
+          ],
+        ),
       ),
     );
   }
