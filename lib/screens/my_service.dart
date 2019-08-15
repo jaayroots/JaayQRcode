@@ -52,7 +52,9 @@ class _MyServiceState extends State<MyService> {
   Widget myDrawerHrader() {
     return DrawerHeader(
       decoration: BoxDecoration(
-        gradient: RadialGradient(colors: [Colors.white, Colors.grey],radius: 1.0),
+        image: DecorationImage(
+          image: AssetImage('images/land.jpg'),fit: BoxFit.fill
+        ),
       ),
       child: Column(
         children: <Widget>[
