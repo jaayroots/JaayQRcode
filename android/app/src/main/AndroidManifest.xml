@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="jaay_qr_code"
+        android:label="JaayQRcode"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
