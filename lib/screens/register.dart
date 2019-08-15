@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jaay_qr_code/screens/my_service.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -13,6 +15,8 @@ class _RegisterState extends State<Register> {
   Color passwordColor = Colors.blueGrey;
   final formKey = GlobalKey<FormState>();
   String nameString, emailString, passwordString;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
 
   // Method
 
@@ -98,8 +102,66 @@ class _RegisterState extends State<Register> {
       onPressed: () {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          print('name = $nameString, email = $emailString, password = $passwordString');
+          print(
+              'name = $nameString, email = $emailString, password = $passwordString');
+          registerThread();
         }
+      },
+    );
+  }
+
+  Future<void> registerThread() async {
+
+    await firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((response) {
+      print('Register Success');
+      setupDisplayName();
+    }).catchError((response) {
+      print('Response = $response');
+      String title = response.code;
+      String message = response.message;
+      myAlert(title, message);
+    });
+  }
+
+
+  Future<void> setupDisplayName()async{
+
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    UserUpdateInfo userUpdateInfo = UserUpdateInfo();
+    userUpdateInfo.displayName = nameString;
+    firebaseUser.updateProfile(userUpdateInfo);
+
+    MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext context) => MyService());
+    Navigator.of(context).pushAndRemoveUntil(materialPageRoute, (Route<dynamic> route) => false);
+
+  }
+
+  void myAlert(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        var test = AlertDialog(
+          title: ListTile(
+            leading: Icon(Icons.error_outline),
+            title: Text(
+              title,
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+          content: Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+        return test;
       },
     );
   }
